@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
+
 public class ArrangeUVIndices
 {
     /// <summary>
@@ -59,6 +60,8 @@ public class ArrangeUVIndices
         int textureCount = CountTexture(renderer.sharedMaterials);
         for (int i = 0; i < textureCount; ++i)
         {
+            var tex = new Texture2D(256,256);
+            
             
         }
     }
