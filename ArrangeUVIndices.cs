@@ -1,27 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
 public class ArrangeUVIndices
 {
+    /// <summary>
+    /// ベイクするテクスチャの数を返す
+    /// </summary>
+    /// <param name="materials"></param>
+    /// <returns></returns>
     static int CountTexture(Material[] materials)
     {
-        Dictionary<string, int> texturePathes = new Dictionary<string, int>();
-        foreach (var mat in materials)
-        {
-            var tex = AssetDatabase.GetAssetPath(mat.mainTexture);
-            texturePathes[tex] = 1;
-        }
-
-        return texturePathes.Count;
+        return materials.Select(mat => AssetDatabase.GetAssetPath(mat.mainTexture)).Distinct().Count();
     }
 
-
-    public static void Arrange(Material[] materials)
+    static void Test(Mesh mesh, Material[] materials)
     {
-        int count = CountTexture(materials);
+        var texPathDict = new Dictionary<string, int>();
+        var submeshCount = mesh.subMeshCount;
+        int texCount = 0;
+        int uvCount = 0;
 
+        var ids = new int[mesh.uv.Count()];
+
+        for (var submesh = 0; submesh < submeshCount; ++submesh)
+        {
+            var submeshIds = mesh.GetIndices(submesh);
+
+            // UVごとにテクスチャを分ける
+            var texPath = AssetDatabase.GetAssetPath(materials[submesh].mainTexture);
+            if (!texPathDict.ContainsKey(texPath))
+                texPathDict[texPath] = texCount++;
+
+            foreach (var id in submeshIds)
+            {
+                ids[uvCount++] = texCount;
+                uvCount++;
+            }
+        }
+    }
+
+    public static void Arrange(SkinnedMeshRenderer renderer)
+    {
+        int count = CountTexture(renderer.sharedMaterials);
+
+        var mesh = renderer.sharedMesh;
+
+        
+        
     }
 
 }
