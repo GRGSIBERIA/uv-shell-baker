@@ -16,7 +16,13 @@ public class ArrangeUVIndices
         return materials.Select(mat => AssetDatabase.GetAssetPath(mat.mainTexture)).Distinct().Count();
     }
 
-    static void Test(Mesh mesh, Material[] materials)
+    /// <summary>
+    /// UVに対してテクスチャのIDを割り振る
+    /// </summary>
+    /// <param name="mesh"></param>
+    /// <param name="materials"></param>
+    /// <returns></returns>
+    static int[] MakeTextureIDs(Mesh mesh, Material[] materials)
     {
         var texPathDict = new Dictionary<string, int>();
         var submeshCount = mesh.subMeshCount;
@@ -34,22 +40,27 @@ public class ArrangeUVIndices
             if (!texPathDict.ContainsKey(texPath))
                 texPathDict[texPath] = texCount++;
 
+            // UVごとにテクスチャのIDを割り振る
             foreach (var id in submeshIds)
             {
-                ids[uvCount++] = texCount;
-                uvCount++;
+                ids[uvCount++] = texPathDict[texPath];
             }
         }
+
+        return ids;
     }
 
     public static void Arrange(SkinnedMeshRenderer renderer)
     {
-        int count = CountTexture(renderer.sharedMaterials);
+        // UVごとにテクスチャIDを割り振る
+        int[] uv2textureIds = MakeTextureIDs(renderer.sharedMesh, renderer.sharedMaterials);
 
-        var mesh = renderer.sharedMesh;
-
-        
-        
+        // テクスチャIDごとにUVShellIDを焼く
+        int textureCount = CountTexture(renderer.sharedMaterials);
+        for (int i = 0; i < textureCount; ++i)
+        {
+            
+        }
     }
 
 }
