@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEditor;
 
 
-public class TextureIDMaker
+public class UV2TextureID
 {
     /// <summary>
     /// ベイクするテクスチャの数を返す
     /// </summary>
     /// <param name="materials"></param>
     /// <returns></returns>
-    public static int TextureCount(Material[] materials)
+    int InitTextureCount(Material[] materials)
     {
         return materials.Select(mat => AssetDatabase.GetAssetPath(mat.mainTexture)).Distinct().Count();
     }
@@ -23,7 +23,7 @@ public class TextureIDMaker
     /// <param name="mesh"></param>
     /// <param name="materials"></param>
     /// <returns></returns>
-    static int[] MakeTextureIDs(Mesh mesh, Material[] materials)
+    int[] MakeTextureIDs(Mesh mesh, Material[] materials)
     {
         var texPathDict = new Dictionary<string, int>();
         var submeshCount = mesh.subMeshCount;
@@ -57,11 +57,26 @@ public class TextureIDMaker
     /// <param name="mesh"></param>
     /// <param name="materials"></param>
     /// <returns></returns>
-    public static int[] Make(Mesh mesh, Material[] materials)
+    int[] Make(Mesh mesh, Material[] materials)
     {
         // UVごとにテクスチャIDを割り振る
         int[] uv2textureIds = MakeTextureIDs(mesh, materials);
         return uv2textureIds;
     }
 
+    /// <summary>
+    /// UVに対応したTextureID
+    /// </summary>
+    public int[] TextureIDs { get; private set; }
+
+    /// <summary>
+    /// モデルに含まれる一意なテクスチャの数を返す
+    /// </summary>
+    public int TextureCount { get; private set; }
+
+    public UV2TextureID(Mesh mesh, Material[] materials)
+    {
+        this.TextureIDs = this.Make(mesh, materials);
+        this.TextureCount = this.InitTextureCount(materials);
+    }
 }
