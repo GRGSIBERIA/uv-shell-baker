@@ -13,13 +13,8 @@ public class UVEdgeNetwork
 
     public List<List<int>> InitNetwork(int[] triangles, int vertexCount)
     {
-        List<List<int>> network = new List<List<int>>(vertexCount);
-
-        for (int i = 0; i < vertexCount; ++i)
-        {
-            network.Add(new List<int>());
-        }
-
+        List<List<int>> network = Enumerable.Repeat<List<int>>(new List<int>(), vertexCount).ToList();
+        
         int triangleCount = triangles.Length / 3;
         for (int i = 0; i < triangleCount; ++i)
         {
