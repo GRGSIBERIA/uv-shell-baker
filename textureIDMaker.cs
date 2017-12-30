@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEditor;
 
 
-public class ArrangeUVIndices
+public class TextureIDMaker
 {
     /// <summary>
     /// ベイクするテクスチャの数を返す
     /// </summary>
     /// <param name="materials"></param>
     /// <returns></returns>
-    static int CountTexture(Material[] materials)
+    public static int TextureCount(Material[] materials)
     {
         return materials.Select(mat => AssetDatabase.GetAssetPath(mat.mainTexture)).Distinct().Count();
     }
@@ -51,19 +51,17 @@ public class ArrangeUVIndices
         return ids;
     }
 
-    public static void Arrange(SkinnedMeshRenderer renderer)
+    /// <summary>
+    /// UVごとに対応したテクスチャIDを割り振る
+    /// </summary>
+    /// <param name="mesh"></param>
+    /// <param name="materials"></param>
+    /// <returns></returns>
+    public static int[] Make(Mesh mesh, Material[] materials)
     {
         // UVごとにテクスチャIDを割り振る
-        int[] uv2textureIds = MakeTextureIDs(renderer.sharedMesh, renderer.sharedMaterials);
-
-        // テクスチャIDごとにUVShellIDを焼く
-        int textureCount = CountTexture(renderer.sharedMaterials);
-        for (int i = 0; i < textureCount; ++i)
-        {
-            var tex = new Texture2D(256,256);
-            
-            
-        }
+        int[] uv2textureIds = MakeTextureIDs(mesh, materials);
+        return uv2textureIds;
     }
 
 }
