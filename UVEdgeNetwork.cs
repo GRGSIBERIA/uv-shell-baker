@@ -11,9 +11,9 @@ public class UVEdgeNetwork
     /// </summary>
     public readonly List<List<int>> UVNetwork;
 
-    public List<List<int>> InitNetwork(int[] triangles, int vertexCount)
+    public List<List<int>> InitNetwork(int[] triangles)
     {
-        List<List<int>> network = Enumerable.Repeat<List<int>>(new List<int>(), vertexCount).ToList();
+        List<List<int>> network = Enumerable.Repeat<List<int>>(new List<int>(), triangles.Length / 3).ToList();
         
         int triangleCount = triangles.Length / 3;
         for (int i = 0; i < triangleCount; ++i)
@@ -28,8 +28,8 @@ public class UVEdgeNetwork
         return network;
     }
 
-    public UVEdgeNetwork(Mesh mesh)
+    public UVEdgeNetwork(int[] triangles)
     {
-        this.UVNetwork = this.InitNetwork(mesh.triangles, mesh.vertexCount);
+        this.UVNetwork = this.InitNetwork(triangles);
     }
 }
