@@ -67,12 +67,12 @@ public class UV2TextureID
     /// <summary>
     /// UVに対応したTextureID
     /// </summary>
-    public int[] TextureIDs { get; private set; }
+    public readonly int[] TextureIDs;
 
     /// <summary>
     /// モデルに含まれる一意なテクスチャの数を返す
     /// </summary>
-    public int TextureCount { get; private set; }
+    public readonly int TextureCount;
 
     public UV2TextureID(Mesh mesh, Material[] materials)
     {
