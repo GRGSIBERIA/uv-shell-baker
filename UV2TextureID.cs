@@ -17,6 +17,11 @@ public class UV2TextureID
         return materials.Select(mat => AssetDatabase.GetAssetPath(mat.mainTexture)).Distinct().Count();
     }
 
+    string[] InitTexturePath(Material[] materials)
+    {
+        return materials.Select(mat => AssetDatabase.GetAssetPath(mat.mainTexture)).Distinct().ToArray();
+    }
+
     /// <summary>
     /// UVに対してテクスチャのIDを割り振る
     /// </summary>
@@ -74,9 +79,12 @@ public class UV2TextureID
     /// </summary>
     public readonly int TextureCount;
 
+    public readonly string[] TexturePathes;
+
     public UV2TextureID(Mesh mesh, Material[] materials)
     {
         this.TextureIDs = this.Make(mesh, materials);
         this.TextureCount = this.InitTextureCount(materials);
+        this.TexturePathes = this.InitTexturePath(materials);
     }
 }
