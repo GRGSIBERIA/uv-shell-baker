@@ -16,7 +16,7 @@ public class UVShellBuilder
     /// <summary>
     /// UVID->島番号
     /// </summary>
-    public readonly int[] AssignedTriangleToShell;
+    public readonly int[] AssignedUVToShell;
 
     /// <summary>
     /// 未使用のUVのインデックスを探す
@@ -88,6 +88,6 @@ public class UVShellBuilder
     public UVShellBuilder(List<List<int>> network, int vertexCount)
     {
         this.ShellNetwork = BuildShellNetwork(network, vertexCount);
-        this.AssignedTriangleToShell = BuildAssignedShell(vertexCount);
+        this.AssignedUVToShell = BuildAssignedShell(vertexCount);
     }
 }
