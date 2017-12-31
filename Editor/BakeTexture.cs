@@ -84,6 +84,6 @@ public class BakeTexture
     public BakeTexture(Vector2[] UVpos, int[] triangles, TextureID textureId, UVShellBuilder shell)
     {
         this.Textures = CreateTextures(textureId.TexturePathes);
-        DisposeGraphics();
+        DisposeGraphics();      // Graphicsを解放，以降は絶対に使用しない
     }
 }
