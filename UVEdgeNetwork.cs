@@ -15,8 +15,7 @@ public class UVEdgeNetwork
     {
         List<List<int>> network = Enumerable.Repeat<List<int>>(new List<int>(), triangles.Length / 3).ToList();
         
-        int triangleCount = triangles.Length / 3;
-        for (int i = 0; i < triangleCount; ++i)
+        for (int i = 0; i < triangles.Length; i += 3)
         {
             int a = i;
             int b = i + 1;
