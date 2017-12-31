@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
-public class UV2TextureID
+public class TextureID
 {
     /// <summary>
     /// ベイクするテクスチャの数を返す
@@ -83,7 +83,7 @@ public class UV2TextureID
     /// </summary>
     public readonly string[] TexturePathes;
 
-    public UV2TextureID(Mesh mesh, Material[] materials)
+    public TextureID(Mesh mesh, Material[] materials)
     {
         this.TextureIDs = this.Make(mesh, materials);
         this.TextureCount = this.InitTextureCount(materials);
