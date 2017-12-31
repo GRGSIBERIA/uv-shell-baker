@@ -16,6 +16,8 @@ public class BakeTexture
     /// </summary>
     List<System.Drawing.Graphics> graphes;
 
+    ColorPalette palette;
+
     List<Bitmap> CreateTextures(string[] texturePathes)
     {
         List<Bitmap> textures = new List<Bitmap>();
@@ -83,6 +85,7 @@ public class BakeTexture
 
     public BakeTexture(Vector2[] UVpos, int[] triangles, TextureID textureId, UVShellBuilder shell)
     {
+        this.palette = new ColorPalette(shell.ShellCount, .7f, .7f);    // ここで彩度を調整
         this.Textures = CreateTextures(textureId.TexturePathes);
         DisposeGraphics();      // Graphicsを解放，以降は絶対に使用しない
     }
