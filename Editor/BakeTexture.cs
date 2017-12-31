@@ -62,6 +62,7 @@ public class BakeTexture
 
     void DrawTriangle(int[] id, Vector2[] uvpos, Size texSize, System.Drawing.Graphics graph)
     {
+        // 重いところでLINQは使いません
         Point[] realpos = {
             new Point((int)(uvpos[id[0]].x * texSize.Width), (int)(uvpos[id[0]].y * texSize.Height)),
             new Point((int)(uvpos[id[1]].x * texSize.Width), (int)(uvpos[id[1]].y * texSize.Height)),
