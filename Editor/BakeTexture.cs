@@ -22,8 +22,33 @@ public class BakeTexture
         return textures;
     }
 
+    void CheckShellAndTextureOnTriangle(UVShellBuilder shell, TextureID textureId, int[] id)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (shell.AssignedUVToShell[id[i]] == shell.AssignedUVToShell[id[i + 1]])
+                throw new System.Exception("Don't match a shell on a triangle!!! why???");
+            if (textureId.TextureIDs[id[i]] == textureId.TextureIDs[id[i + 1]])
+                throw new System.Exception("Don't match a texture on a triangle!!! why???");
+        }
+    }
+
+    void PaintingShell(Vector2[] UVpos, int[] triangles, UVShellBuilder shell, TextureID textureId)
+    {
+        for (int i = 0; i < triangles.Length; i += 3)
+        {
+            int[] id = { triangles[i], triangles[i + 1], triangles[i + 2] };
+
+            CheckShellAndTextureOnTriangle(shell, textureId, id);
+
+
+        }
+    }
+
     public BakeTexture(Vector2[] UVpos, int[] triangles, TextureID textureId, UVShellBuilder shell)
     {
         this.Textures = CreateTextures(textureId.TexturePathes);
+
+        
     }
 }
