@@ -6,12 +6,16 @@ using System.Drawing;
 
 public class BakeTexture
 {
-    public List<Image> Textures { get; private set; }
+    /// <summary>
+    /// ベイク済みのテクスチャ
+    /// </summary>
+    public List<Bitmap> Textures { get; private set; }
+
     List<System.Drawing.Graphics> graphes;
 
-    List<Image> CreateTextures(string[] texturePathes)
+    List<Bitmap> CreateTextures(string[] texturePathes)
     {
-        List<Image> textures = new List<Image>();
+        List<Bitmap> textures = new List<Bitmap>();
         graphes = new List<System.Drawing.Graphics>();      // あとでDisposeしないといけない
         foreach (var path in texturePathes)
         {
@@ -24,7 +28,15 @@ public class BakeTexture
         return textures;
     }
 
-
+    /// <summary>
+    /// Graphicsの解放処理，graphesは二度と使用しない
+    /// </summary>
+    void DisposeGraphics()
+    {
+        foreach (var g in this.graphes)
+            g.Dispose();
+        graphes = null;
+    }
 
     /// <summary>
     /// 島とテクスチャIDがポリゴンに紐付いていないケースをチェックする
@@ -50,7 +62,7 @@ public class BakeTexture
             new Point((int)(uvpos[id[1]].x * texSize.Width), (int)(uvpos[id[1]].y * texSize.Height)),
             new Point((int)(uvpos[id[2]].x * texSize.Width), (int)(uvpos[id[2]].y * texSize.Height)) };
 
-        graph.FillPolygon(Brushes.Black, realpos);
+        graph.FillPolygon(Brushes.Black, realpos);      // 島ごとに色を変えたい！
     }
 
     void PaintingShell(Vector2[] UVpos, int[] triangles, UVShellBuilder shell, TextureID textureId)
@@ -69,7 +81,6 @@ public class BakeTexture
     public BakeTexture(Vector2[] UVpos, int[] triangles, TextureID textureId, UVShellBuilder shell)
     {
         this.Textures = CreateTextures(textureId.TexturePathes);
-
-        
+        DisposeGraphics();
     }
 }
