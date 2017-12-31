@@ -11,6 +11,9 @@ public class BakeTexture
     /// </summary>
     public List<Bitmap> Textures { get; private set; }
 
+    /// <summary>
+    /// コンストラクタ以外で使用してはいけない
+    /// </summary>
     List<System.Drawing.Graphics> graphes;
 
     List<Bitmap> CreateTextures(string[] texturePathes)
