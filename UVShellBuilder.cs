@@ -11,12 +11,12 @@ public class UVShellBuilder
     /// <summary>
     /// 島番号->UVID
     /// </summary>
-    public readonly List<List<int>> ShellNetwork;
+    public List<List<int>> ShellNetwork { get; private set; }
 
     /// <summary>
     /// UVID->島番号
     /// </summary>
-    public readonly int[] AssignedUVToShell;
+    public int[] AssignedUVToShell { get; private set; }
 
     /// <summary>
     /// 未使用のUVのインデックスを探す

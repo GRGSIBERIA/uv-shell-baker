@@ -71,17 +71,17 @@ public class TextureID
     /// <summary>
     /// UVに対応したTextureID
     /// </summary>
-    public readonly int[] TextureIDs;
+    public int[] TextureIDs { get; private set; }
 
     /// <summary>
     /// モデルに含まれる一意なテクスチャの数を返す
     /// </summary>
-    public readonly int TextureCount;
+    public int TextureCount { get; private set; }
 
     /// <summary>
     /// 一意なテクスチャのパス名を返す
     /// </summary>
-    public readonly string[] TexturePathes;
+    public string[] TexturePathes { get; private set; }
 
     public TextureID(Mesh mesh, Material[] materials)
     {

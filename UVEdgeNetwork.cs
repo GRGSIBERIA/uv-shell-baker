@@ -9,7 +9,7 @@ public class UVEdgeNetwork
     /// 始点と終点の頂点番号で構成されるエッジ，重複あり
     /// p_k \in {p_n, p_n+1, ..., p_n+m}
     /// </summary>
-    public readonly List<List<int>> UVNetwork;
+    public List<List<int>> UVNetwork { get; private set; }
 
     public List<List<int>> InitNetwork(int[] triangles)
     {
