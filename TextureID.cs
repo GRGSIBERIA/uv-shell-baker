@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
-
 public class UV2TextureID
 {
     /// <summary>
@@ -79,6 +78,9 @@ public class UV2TextureID
     /// </summary>
     public readonly int TextureCount;
 
+    /// <summary>
+    /// 一意なテクスチャのパス名を返す
+    /// </summary>
     public readonly string[] TexturePathes;
 
     public UV2TextureID(Mesh mesh, Material[] materials)
