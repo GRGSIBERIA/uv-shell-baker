@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System.Drawing;
 
 public class BakeTexture
 {
-    List<Image> Textures;
+    public List<Image> Textures { get; private set; }
 
     List<Image> CreateTextures(string[] texturePathes)
     {
         List<Image> textures = new List<Image>();
         foreach (var path in texturePathes)
         {
-            var img = new Bitmap(path);
-            textures.Add(img);
+            var source = new Bitmap(path);
+            var graph = System.Drawing.Graphics.FromImage(source);
+            graph.FillRectangle(Brushes.Black, new Rectangle(0, 0, source.Width, source.Height));
+            graph.Dispose();
+            textures.Add(source);
         }
         return textures;
     }
