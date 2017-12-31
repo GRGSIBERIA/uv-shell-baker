@@ -19,6 +19,11 @@ public class UVShellBuilder
     public int[] AssignedUVToShell { get; private set; }
 
     /// <summary>
+    /// 島の数
+    /// </summary>
+    public int ShellCount { get; private set; }
+
+    /// <summary>
     /// 未使用のUVのインデックスを探す
     /// </summary>
     /// <param name="usedUVs"></param>
@@ -85,9 +90,15 @@ public class UVShellBuilder
         return uv2shell;
     }
 
+    int InitShellCount()
+    {
+        return this.ShellNetwork.Count;
+    }
+
     public UVShellBuilder(List<List<int>> network, int vertexCount)
     {
         this.ShellNetwork = BuildShellNetwork(network, vertexCount);
         this.AssignedUVToShell = BuildAssignedShell(vertexCount);
+        this.ShellCount = InitShellCount();
     }
 }
