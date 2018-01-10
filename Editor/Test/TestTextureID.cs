@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
+using System.Linq;
 using NUnit.Framework;
 using System.Collections;
 
@@ -21,5 +22,13 @@ public class TestTextureID {
         var textureid = GetTextureID();
         Assert.AreEqual(textureid.TextureCount, 3);
 	}
-    
+
+    [Test]
+    public void Test()
+    {
+        var textureid = GetTextureID();
+        var pathes = new string[] { "gray", "red", "blue" };
+        
+    }
+
 }

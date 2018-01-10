@@ -32,27 +32,26 @@ public class TextureID
         var texPathDict = new Dictionary<string, int>();
         var submeshCount = mesh.subMeshCount;
         int texCount = 0;
-        int uvCount = 0;
         int triangleCount = mesh.triangles.Length / 3;
 
-        var ids = new int[mesh.triangles.Length / 3];
+        var ids = new List<int>(triangleCount);
 
         for (var submesh = 0; submesh < submeshCount; ++submesh)
         {
             var submeshIds = mesh.GetIndices(submesh);
+            var triangleCountOfSubmesh = submeshIds.Length / 3;
 
             // UVごとにテクスチャを分ける
             var texPath = AssetDatabase.GetAssetPath(materials[submesh].mainTexture);
             if (!texPathDict.ContainsKey(texPath))
                 texPathDict[texPath] = texCount++;
 
-            for (int i = 0; i < triangleCount; ++i)
+            for (int i = 0; i < triangleCountOfSubmesh; ++i)
             {
-                ids[uvCount++] = texPathDict[texPath];
+                ids.Add(texPathDict[texPath]);
             }
         }
-
-        return ids;
+        return ids.ToArray();
     }
 
     /// <summary>
@@ -69,7 +68,7 @@ public class TextureID
     }
 
     /// <summary>
-    /// UVに対応したTextureID
+    /// ポリゴンに対するTextureID
     /// </summary>
     public int[] TextureIDs { get; private set; }
 
