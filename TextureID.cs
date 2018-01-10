@@ -22,19 +22,20 @@ public class TextureID
     }
 
     /// <summary>
-    /// UVに対してテクスチャのIDを割り振る
+    /// ポリゴンごとのテクスチャのIDを割り振る
     /// </summary>
     /// <param name="mesh"></param>
     /// <param name="materials"></param>
     /// <returns></returns>
-    int[] MakeTextureIDs(Mesh mesh, Material[] materials)
+    int[] MakeTextureIDsForTriangle(Mesh mesh, Material[] materials)
     {
         var texPathDict = new Dictionary<string, int>();
         var submeshCount = mesh.subMeshCount;
         int texCount = 0;
         int uvCount = 0;
+        int triangleCount = mesh.triangles.Length / 3;
 
-        var ids = new int[mesh.uv.Count()];
+        var ids = new int[mesh.triangles.Length / 3];
 
         for (var submesh = 0; submesh < submeshCount; ++submesh)
         {
@@ -45,8 +46,7 @@ public class TextureID
             if (!texPathDict.ContainsKey(texPath))
                 texPathDict[texPath] = texCount++;
 
-            // UVごとにテクスチャのIDを割り振る
-            foreach (var id in submeshIds)
+            for (int i = 0; i < triangleCount; ++i)
             {
                 ids[uvCount++] = texPathDict[texPath];
             }
@@ -56,7 +56,7 @@ public class TextureID
     }
 
     /// <summary>
-    /// UVごとに対応したテクスチャIDを割り振る
+    /// ポリゴンごとに対応したテクスチャIDを割り振る
     /// </summary>
     /// <param name="mesh"></param>
     /// <param name="materials"></param>
@@ -64,8 +64,8 @@ public class TextureID
     int[] Make(Mesh mesh, Material[] materials)
     {
         // UVごとにテクスチャIDを割り振る
-        int[] uv2textureIds = MakeTextureIDs(mesh, materials);
-        return uv2textureIds;
+        int[] triangle2textureIds = MakeTextureIDsForTriangle(mesh, materials);
+        return triangle2textureIds;
     }
 
     /// <summary>
