@@ -23,12 +23,22 @@ public class TestTextureID {
         Assert.AreEqual(textureid.TextureCount, 3);
 	}
 
+    bool HasContaints(string path, string[] texPathes)
+    {
+        if (texPathes.Select(x => path == x).Count() > 0)
+            return true;
+        return false;
+    }
+
     [Test]
     public void Test()
     {
         var textureid = GetTextureID();
         var pathes = new string[] { "gray", "red", "blue" };
-        
+        foreach (var path in pathes)
+        {
+            Assert.AreEqual(true, HasContaints(path, textureid.TexturePathes));
+        }
     }
 
 }
