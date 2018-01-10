@@ -6,15 +6,10 @@ using System.Collections;
 
 public class TestLoadModel
 {
-    GameObject Load()
-    {
-        return LoadTestModel.Load("Assets/Scripts/uv-shell-baker/Editor/Test/Models/cube.fbx");
-    }
-
     [Test]
     public void LoadModel()
     {
-        var go = Load();
+        var go = LoadTestModel.Load(LoadTestModel.TestCase.Cube);
         Assert.AreEqual("cube", go.name);
     }
 }
