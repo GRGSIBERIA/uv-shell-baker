@@ -11,24 +11,25 @@ public class UVEdgeNetwork
     /// </summary>
     public List<List<int>> UVNetwork { get; private set; }
 
-    public List<List<int>> InitNetwork(int[] triangles)
+    public List<List<int>> InitNetwork(int[] triangles, int vertexCount)
     {
-        List<List<int>> network = Enumerable.Repeat<List<int>>(new List<int>(), triangles.Length / 3).ToList();
-        
-        for (int i = 0; i < triangles.Length; i += 3)
-        {
-            int a = i;
-            int b = i + 1;
-            int c = i + 2;
+        int triangleLength = triangles.Length / 3;
+        List<List<int>> network = Enumerable.Repeat<List<int>>(new List<int>(), vertexCount).ToList();
 
-            network[a].Add(b);
-            network[b].Add(c);
+        for (int i = 0; i < triangleLength; ++i)
+        {
+            int a = i * 3;
+            int b = i * 3 + 1;
+            int c = i * 3 + 2;
+            
+            network[triangles[a]].Add(b);
+            network[triangles[b]].Add(c);
         }
         return network;
     }
 
-    public UVEdgeNetwork(int[] triangles)
+    public UVEdgeNetwork(int[] triangles, int vertexCount)
     {
-        this.UVNetwork = this.InitNetwork(triangles);
+        this.UVNetwork = this.InitNetwork(triangles, vertexCount);
     }
 }
