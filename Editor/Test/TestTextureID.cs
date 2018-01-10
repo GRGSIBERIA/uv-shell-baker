@@ -6,17 +6,20 @@ using System.Collections;
 
 public class TestTextureID {
 
+    TextureID GetTextureID()
+    {
+        var go = LoadTestModel.Load(LoadTestModel.TestCase.Cube);
+        var render = go.GetComponent<MeshFilter>();
+        var mat = go.GetComponent<MeshRenderer>();
+        return new TextureID(render.sharedMesh, mat.sharedMaterials);
+    }
+
+
 	[Test]
-	public void TestTextureIDSimplePasses() {
-		// Use the Assert class to test conditions.
+	public void TestTextureCount() {
+        // Use the Assert class to test conditions.
+        var textureid = GetTextureID();
+        Assert.AreEqual(textureid.TextureCount, 3);
 	}
     
-	// A UnityTest behaves like a coroutine in PlayMode
-	// and allows you to yield null to skip a frame in EditMode
-	[UnityTest]
-	public IEnumerator TestTextureIDWithEnumeratorPasses() {
-		// Use the Assert class to test conditions.
-		// yield to skip a frame
-		yield return null;
-	}
 }
