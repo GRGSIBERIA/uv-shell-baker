@@ -18,12 +18,12 @@ public class UVEdgeNetwork
 
         for (int i = 0; i < triangleLength; ++i)
         {
-            int a = i * 3;
-            int b = i * 3 + 1;
-            int c = i * 3 + 2;
+            int a = triangles[i * 3];
+            int b = triangles[i * 3 + 1];
+            int c = triangles[i * 3 + 2];
             
-            network[triangles[a]].Add(b);
-            network[triangles[b]].Add(c);
+            network[a].Add(b);
+            network[b].Add(c);
         }
         return network;
     }
