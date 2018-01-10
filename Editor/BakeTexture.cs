@@ -60,7 +60,7 @@ public class BakeTexture
         }
     }
 
-    void DrawTriangle(int[] id, Vector2[] uvpos, Size texSize, System.Drawing.Graphics graph)
+    void DrawTriangle(int[] id, Vector2[] uvpos, Size texSize, System.Drawing.Graphics graph, int times)
     {
         // 重いところでLINQは使いません
         Point[] realpos = {
@@ -68,7 +68,8 @@ public class BakeTexture
             new Point((int)(uvpos[id[1]].x * texSize.Width), (int)(uvpos[id[1]].y * texSize.Height)),
             new Point((int)(uvpos[id[2]].x * texSize.Width), (int)(uvpos[id[2]].y * texSize.Height)) };
 
-        graph.FillPolygon(Brushes.Black, realpos);      // 島ごとに色を変えたい！
+        var brush = new SolidBrush(this.palette.Colors[times]);
+        graph.FillPolygon(brush, realpos);      // 島ごとに色を変えたい！
     }
 
     void PaintingShell(Vector2[] UVpos, int[] triangles, UVShellBuilder shell, TextureID textureId)
@@ -80,7 +81,7 @@ public class BakeTexture
             CheckShellAndTextureOnTriangle(shell, textureId, id);
 
             // id[0]が通用するのは，三角形のすべてで値が一致しているから
-            DrawTriangle(id, UVpos, Textures[id[0]].Size, graphes[id[0]]);
+            DrawTriangle(id, UVpos, Textures[id[0]].Size, graphes[id[0]], i);
         }
     }
 
