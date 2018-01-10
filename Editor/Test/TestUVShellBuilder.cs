@@ -10,15 +10,14 @@ public class TestUVShellBuilder
     {
         var go = LoadTestModel.Load(LoadTestModel.TestCase.Cube);
         var render = go.GetComponent<MeshFilter>();
-        var network = new UVEdgeNetwork(render.sharedMesh.triangles);
-        return new UVShellBuilder(network.UVNetwork, render.sharedMesh.vertexCount);
+        var network = new UVEdgeNetwork(render.sharedMesh.triangles, render.sharedMesh.vertexCount);
+        return new UVShellBuilder(network.UVNetwork, render.sharedMesh.uv.Length);
     }
 
 	[Test]
-	public void TestUVShellBuilderSimplePasses() {
-        // Use the Assert class to test conditions.
+	public void TestUVShellBuilderShellCount() {
         var builder = GetUVShellBuilder();
 
-        
+        Assert.AreEqual(builder.ShellCount, 18);
     }
 }
