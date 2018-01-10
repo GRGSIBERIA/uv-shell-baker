@@ -46,26 +46,26 @@ public class UVShellBuilder
     /// </summary>
     /// <param name="usedUVs"></param>
     /// <param name="network"></param>
-    /// <param name="start"></param>
-    void BreadthFirstSearch(int[] usedUVs, List<List<int>> network, List<List<int>> shellNetwork, int start)
+    /// <param name="startPoint"></param>
+    void BreadthFirstSearch(int[] usedUVs, List<List<int>> network, List<List<int>> shellNetwork, int startPoint)
     {
         // UV点を踏んだので使用する
-        usedUVs[start] = 1;
-        shellNetwork.Last().Add(start);
+        usedUVs[startPoint] = 1;
+        shellNetwork.Last().Add(startPoint);
 
-        var ends = network[start];
-        foreach (var end in ends)
+        var endPoints = network[startPoint];
+        foreach (var endPoint in endPoints)
         {
             // 遷移先のUVが使用済みなら無視する
-            if (usedUVs[end] == 1)
+            if (usedUVs[endPoint] == 1)
                 continue;
-            BreadthFirstSearch(usedUVs, network, shellNetwork, end);  // 未使用の末端に移動
+            BreadthFirstSearch(usedUVs, network, shellNetwork, endPoint);  // 未使用の末端に移動
         }
     }
 
-    List<List<int>> BuildShellNetwork(List<List<int>> network, int vertexCount)
+    List<List<int>> BuildShellNetwork(List<List<int>> network, int uvCount)
     {
-        int[] usedUVs = Enumerable.Repeat<int>(0, vertexCount).ToArray();
+        int[] usedUVs = Enumerable.Repeat<int>(0, uvCount).ToArray();
         var shellNetwork = new List<List<int>>();
 
         int nextId;
@@ -77,9 +77,9 @@ public class UVShellBuilder
         return shellNetwork;
     }
 
-    int[] BuildAssignedShell(int vertexCount)
+    int[] BuildAssignedShell(int uvCount)
     {
-        int[] uv2shell = new int[vertexCount];
+        int[] uv2shell = new int[uvCount];
 
         for (int i = 0; i < this.ShellNetwork.Count; ++i)
         {
@@ -95,10 +95,10 @@ public class UVShellBuilder
         return this.ShellNetwork.Count;
     }
 
-    public UVShellBuilder(List<List<int>> network, int vertexCount)
+    public UVShellBuilder(List<List<int>> network, int uvCount)
     {
-        this.ShellNetwork = BuildShellNetwork(network, vertexCount);
-        this.AssignedUVToShell = BuildAssignedShell(vertexCount);
+        this.ShellNetwork = BuildShellNetwork(network, uvCount);
+        this.AssignedUVToShell = BuildAssignedShell(uvCount);
         this.ShellCount = InitShellCount();
     }
 }
