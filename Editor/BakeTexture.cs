@@ -49,14 +49,12 @@ public class BakeTexture
     /// <param name="shell"></param>
     /// <param name="textureId"></param>
     /// <param name="id"></param>
-    void CheckShellAndTextureOnTriangle(UVShellBuilder shell, TextureID textureId, int[] id)
+    void CheckShellAndTextureOnTriangle(UVShellBuilder shell, int[] id)
     {
         for (int i = 0; i < 2; ++i)
         {
             if (shell.AssignedUVToShell[id[i]] == shell.AssignedUVToShell[id[i + 1]])
                 throw new System.Exception("Don't match a shell on a triangle!!! why???");
-            if (textureId.TextureIDs[id[i]] == textureId.TextureIDs[id[i + 1]])
-                throw new System.Exception("Don't match a texture on a triangle!!! why???");
         }
     }
 
@@ -78,10 +76,11 @@ public class BakeTexture
         {
             int[] id = { triangles[i], triangles[i + 1], triangles[i + 2] };
 
-            CheckShellAndTextureOnTriangle(shell, textureId, id);
+            CheckShellAndTextureOnTriangle(shell, id);
 
             // id[0]が通用するのは，三角形のすべてで値が一致しているから
-            DrawTriangle(id, UVpos, Textures[id[0]].Size, graphes[id[0]], i);
+            var targetId = textureId.TextureIDs[i / 3];
+            DrawTriangle(id, UVpos, Textures[id[0]].Size, graphes[targetId], i);
         }
     }
 
