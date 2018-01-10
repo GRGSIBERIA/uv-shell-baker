@@ -31,7 +31,7 @@ public class TestTextureID {
     }
 
     [Test]
-    public void Test()
+    public void TestTextureIDPathes()
     {
         var textureid = GetTextureID();
         var pathes = new string[] { "gray", "red", "blue" };
@@ -41,4 +41,16 @@ public class TestTextureID {
         }
     }
 
+    [Test]
+    public void TestTextureIDFromTriangle()
+    {
+        var textureid = GetTextureID();
+        for (int i = 0; i < 3; ++i)
+        {
+            for (int j = 0; j < 12; ++j)
+            {
+                Assert.AreEqual(textureid.TextureIDs[i * 12 + j], i);
+            }
+        }
+    }
 }
