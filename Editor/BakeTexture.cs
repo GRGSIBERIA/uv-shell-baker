@@ -78,16 +78,21 @@ public class BakeTexture
 
             CheckShellAndTextureOnTriangle(shell, id);
 
-            // id[0]が通用するのは，三角形のすべてで値が一致しているから
+            // id[0]が通用するのは，三角形のすべてで値がテクスチャごとに一致しているから
             var targetId = textureId.TextureIDs[i / 3];
             DrawTriangle(id, UVpos, Textures[id[0]].Size, graphes[targetId], i);
         }
     }
 
-    public BakeTexture(Vector2[] UVpos, int[] triangles, TextureID textureId, UVShellBuilder shell)
+    public BakeTexture(TextureID textureId, UVShellBuilder shell)
     {
         this.palette = new ColorPalette(shell.ShellCount, .7f, .7f);    // ここで彩度を調整
         this.Textures = CreateTextures(textureId.TexturePathes);
         DisposeGraphics();      // Graphicsを解放，以降は絶対に使用しない
+    }
+
+    public void Bake(Vector2[] UVpos, int[] triangles, TextureID textureId, UVShellBuilder shell)
+    {
+        PaintingShell(UVpos, triangles, shell, textureId);
     }
 }
